@@ -7,5 +7,9 @@
     "default_icon": "img/icon.jpg",
     "default_popup": "html/popup.html"
   },
+  "background": {
+    "scripts": ["js/background.js"] ,
+    "persistent": false
+  },
   "permissions": ["storage", "tabs", "<all_urls>"]
 }

@@ -23,10 +23,10 @@ renderRunner();
 
 function renderRunner() {
   var renderBtn = document.querySelector('#renderBtn');
+  var clearBtn = document.querySelector('#clearBtn');
   var code = document.querySelector('#styleCode');
 
   renderBtn.onclick = function() {
-    console.log(chrome.storage.local);
     chrome.tabs.query({
       active: true
     }, function(tabs) {
@@ -37,19 +37,25 @@ function renderRunner() {
       obj[host] = code.value;
       chrome.storage.local.set(obj);
 
-      chrome.storage.local.get(function( items ) {
-        console.log(items);
-      });
+      chrome.tabs.insertCSS(null, {
+        code: code.value
+      }, function() {});
     });
 
+  };
 
-    chrome.tabs.insertCSS(null, {
-      code: code.value
-    }, function() {
-      // If you try and inject into an extensions page or the webstore/NTP you'll get an error
-      if (chrome.runtime.lastError) {
-        message.innerText = 'There was an error injecting script : \n' + chrome.runtime.lastError.message;
-      }
+  clearBtn.onclick = function(){
+
+    chrome.tabs.query({
+      active: true
+    }, function(tabs) {
+      var host = getDomain(tabs[0].url);
+      console.log(host);
+      chrome.storage.local.remove(host);
+
+      chrome.tabs.insertCSS(null, {
+        code: ''
+      }, function() {});
     });
   };
 }
