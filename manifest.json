@@ -7,5 +7,5 @@
     "default_icon": "img/icon.jpg",
     "default_popup": "html/popup.html"
   },
-  "permissions": ["tabs", "<all_urls>"]
+  "permissions": ["storage", "tabs", "<all_urls>"]
 }
